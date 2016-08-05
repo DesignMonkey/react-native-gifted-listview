@@ -8,9 +8,9 @@ import {
     Text,
     RefreshControl,
     StyleSheet,
+    ActivityIndicator,
 } from 'react-native';
 
-import GiftedSpinner from 'react-native-gifted-spinner';
 
 export default class GiftedListView extends Component {
 
@@ -99,7 +99,7 @@ export default class GiftedListView extends Component {
 
     return (
       <View style={[defaultStyles.paginationView, this.props.customStyles.paginationView]}>
-        <GiftedSpinner />
+        <ActivityIndicator />
       </View>
     );
   }
