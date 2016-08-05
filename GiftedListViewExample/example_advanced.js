@@ -2,21 +2,20 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
-'use strict';
 
-var React = require('react');
-var {
+import React, { Component } from 'react';
+import {
   StyleSheet,
   Text,
   View,
   TouchableHighlight,
   Platform
-} = require('react-native');
+} from 'react-native';
 
-var GiftedListView = require('react-native-gifted-listview');
-var GiftedSpinner = require('react-native-gifted-spinner');
+import GiftedListView from 'react-native-gifted-listview';
+import GiftedSpinner from 'react-native-gifted-spinner';
 
-var Example = React.createClass({
+export default class GiftedListViewExample  extends Component {
 
   /**
    * Will be called when refreshing
@@ -38,7 +37,7 @@ var Example = React.createClass({
         callback(rows);
       }
     }, 1000); // simulating network fetching
-  },
+  }
 
 
   /**
@@ -47,23 +46,22 @@ var Example = React.createClass({
    */
   _onPress(rowData) {
     console.log(rowData+' pressed');
-  },
+  }
 
   /**
    * Render a row
    * @param {object} rowData Row data
    */
-  _renderRowView(rowData) {
+  _renderRowView = (rowData) => {
     return (
       <TouchableHighlight
         style={customStyles.row}
         underlayColor='#c8c7cc'
-        onPress={() => this._onPress(rowData)}
-      >
+        onPress={() => this._onPress(rowData)} >
         <Text>{rowData}</Text>
       </TouchableHighlight>
     );
-  },
+  }
 
   /**
    * Render a row
@@ -77,7 +75,7 @@ var Example = React.createClass({
         </Text>
       </View>
     );
-  },
+  }
 
   /**
    * Render the refreshable view when waiting for refresh
@@ -106,7 +104,7 @@ var Example = React.createClass({
         </TouchableHighlight>
       );
     }
-  },
+  }
 
   /**
    * Render the refreshable view when the pull to refresh has been activated
@@ -120,7 +118,7 @@ var Example = React.createClass({
         </Text>
       </View>
     );
-  },
+  }
 
   /**
    * Render the refreshable view when fetching
@@ -131,7 +129,7 @@ var Example = React.createClass({
         <GiftedSpinner />
       </View>
     );
-  },
+  }
 
   /**
    * Render the pagination view when waiting for touch
@@ -149,7 +147,7 @@ var Example = React.createClass({
         </Text>
       </TouchableHighlight>
     );
-  },
+  }
 
   /**
    * Render the pagination view when fetching
@@ -160,7 +158,7 @@ var Example = React.createClass({
         <GiftedSpinner />
       </View>
     );
-  },
+  }
 
   /**
    * Render the pagination view when end of list is reached
@@ -173,7 +171,7 @@ var Example = React.createClass({
         </Text>
       </View>
     );
-  },
+  }
 
   /**
    * Render a view when there is no row to display at the first fetch
@@ -196,7 +194,7 @@ var Example = React.createClass({
         </TouchableHighlight>
       </View>
     );
-  },
+  }
 
   /**
    * Render a separator between rows
@@ -205,7 +203,7 @@ var Example = React.createClass({
     return (
       <View style={customStyles.separator} />
     );
-  },
+  }
 
   render() {
     return (
@@ -244,28 +242,11 @@ var Example = React.createClass({
             colors: ['#fff'],
             progressBackgroundColor: '#003e82',
           }}
-
-          rowHasChanged={(r1,r2)=>{
-            r1.id !== r2.id
-          }}
-          distinctRows={(rows)=>{
-            var indentitis = {};
-            var newRows = [];
-            for(var i = 0;i<rows.length; i++){
-              if(indentitis[rows[i].id]){
-
-              }else{
-                indentitis[rows[i].id]=true;
-                newRows.push(rows[i]);
-              }
-            }
-            return newRows;
-          }}
         />
       </View>
     );
   }
-});
+}
 
 
 var customStyles = {
@@ -330,5 +311,3 @@ var screenStyles = {
     marginTop: 12,
   }
 };
-
-module.exports = Example;
