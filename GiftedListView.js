@@ -9,6 +9,7 @@ import {
     RefreshControl,
     StyleSheet,
     ActivityIndicator,
+    InteractionManager,
 } from 'react-native';
 
 
@@ -37,6 +38,9 @@ export default class GiftedListView extends Component {
     paginationWaitingView: React.PropTypes.func,
     emptyView: React.PropTypes.func,
     renderSeparator: React.PropTypes.func,
+
+    spinnerSize: React.PropTypes.string,
+    spinnerColor: React.PropTypes.string,
   };
 
   static defaultProps = {
@@ -62,6 +66,9 @@ export default class GiftedListView extends Component {
     paginationWaitingView: null,
     emptyView: null,
     renderSeparator: null,
+
+    spinnerSize: 'small',
+    spinnerColor: 'gray',
   };
 
   state = {
@@ -89,7 +96,9 @@ export default class GiftedListView extends Component {
   }
 
   componentDidMount() {
-    this.props.onFetch(this.state.page, this._postRefresh, {firstLoad: true});
+    InteractionManager.runAfterInteractions(() => {
+      this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
+    });
   }
 
   paginationFetchingView = () => {
@@ -99,7 +108,11 @@ export default class GiftedListView extends Component {
 
     return (
       <View style={[defaultStyles.paginationView, this.props.customStyles.paginationView]}>
-        <ActivityIndicator />
+        <ActivityIndicator
+          animating={true}
+          size={this.props.spinnerSize}
+          color={this.props.spinnerColor}
+        />
       </View>
     );
   }
